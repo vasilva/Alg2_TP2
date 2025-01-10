@@ -32,21 +32,24 @@ class TSP:
         """
         return self.N
 
-    def __call__(self, algorithm="BB"):
+    def __call__(self, algorithm="bb"):
         """
         Find the shortest path between all nodes.
+
         Args:
-            algorithm (str): The algorithm to use.
+            algorithm (str): The algorithm to use. Valid choices are:
+                Branch and Bound: 'bb'.
+                Twice Around the Tree: 'tat'.
+            Default is 'bb'.
 
         Returns:
             final_res (int): The cost of the shortest path.
-            final_path (list): The shortest path between all nodes. Valid choices are "BB" and "TAT". Default is "BB".
-
+            final_path (list): The shortest path between all nodes.
         """
         match algorithm:
-            case "BB":
+            case "bb":
                 return self.BB_TSP()
-            case "TAT":
+            case "tat":
                 return self.TAT_TSP()
             case _:
                 raise ValueError("Invalid algorithm")
@@ -101,7 +104,7 @@ class TSP:
         Find the shortest path between all nodes using Branch and Bound.
 
         Returns:
-            final_res (float): The cost of the shortest path.
+            final_res (int): The cost of the shortest path.
             final_path (list): The shortest path between all nodes.
         """
         # Compute initial bound
@@ -118,7 +121,7 @@ class TSP:
 
         self.TSPRec(curr_weight=0, level=1)
 
-        return self.final_res, self.final_path
+        return int(self.final_res), self.final_path
 
     def TSPRec(self, curr_weight, level):
         """
@@ -199,7 +202,6 @@ class TSP:
         Returns:
             final_res (int): The cost of the shortest path.
             final_path (list): The shortest path between all nodes.
-
         """
         # Create the Minimum Spanning Tree using Prim algorithm.
         mst = nx.minimum_spanning_tree(self.Graph, algorithm="prim")
@@ -212,7 +214,7 @@ class TSP:
             self.full_res += self.adj[dfs[i - 1]][dfs[i]]
 
         self.full_walk = dfs + [dfs[0]]
-        return self.full_res, self.full_walk
+        return int(self.full_res), self.full_walk
 
 
 if __name__ == "__main__":
@@ -226,8 +228,8 @@ if __name__ == "__main__":
     G = nx.from_numpy_array(np.array(adj))
     N = len(G)
     T = TSP(G)
-    BB_final_res, BB_final_path = T("BB")
-    TAT_final_res, TAT_final_path = T("TAT")
+    BB_final_res, BB_final_path = T("bb")
+    TAT_final_res, TAT_final_path = T("tat")
 
     print("Branch and Bound")
     print(f"Minimum cost: {BB_final_res}")
