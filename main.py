@@ -2,6 +2,14 @@ import numpy as np
 import networkx as nx
 import pandas as pd
 import scipy as sp
+import os
+
+
+def open_tsp_files():
+    path = "data/"
+    files = os.listdir(path)
+    files = [file for file in files if file.endswith(".tsp")]
+    return path, files
 
 
 def read_tsp(filename: str):
@@ -26,15 +34,15 @@ def read_tsp(filename: str):
                 case "COMMENT":
                     comment = line[-1].strip()
                 case "DIMENSION":
-                    dimension = int(line[-1].strip())
+                    dim = int(line[-1].strip())
                 case _:
                     _ = line[-1].strip()
         points = []
-        for i in range(dimension):
+        for i in range(dim):
             _, x, y = f.readline().split()
-            points.append((int(x), int(y)))
+            points.append((float(x), float(y)))
 
-    return points, name, comment, dimension
+    return points, name, comment, dim
 
 
 def euclidean_distance(x1, y1, x2, y2) -> int:
@@ -49,29 +57,37 @@ def euclidean_distance(x1, y1, x2, y2) -> int:
     Retorna:
         int: A distância euclidiana entre os dois pontos.
     """
-    return int(np.round(np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)))
+    return int(np.rint(np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)))
 
 
-def complete_graph(points, dimension) -> nx.Graph:
+def complete_graph(points) -> nx.Graph:
     """
     Cria um grafo completo com n nós.
     Args:
-        points (list[(int, int)]): Uma lista de pontos.
-        dimension (int): A dimensão do problema TSP.
+        points (list[(int, int)]): Uma lista com coordenadas (x,y) dos pontos.
 
     Retorna:
         nx.Graph: O grafo completo.
     """
     G = nx.Graph()
-    G.add_nodes_from(range(1, dimension + 1))
-    for i in range(1, dimension + 1):
-        for j in range(i + 1, dimension + 1):
-            w = euclidean_distance(*points[i - 1], *points[j - 1])
+    dim = len(points)
+    G.add_nodes_from(range(dim))
+    for i in range(dim):
+        for j in range(i + 1, dim):
+            w = euclidean_distance(*points[i], *points[j])
             G.add_edge(i, j, weight=w)
     return G
 
 
 if __name__ == "__main__":
-    points, name, comment, dim = read_tsp("data/a280.tsp")
-    G = complete_graph(points, dim)
-    print(str(G))
+    path, files = open_tsp_files()
+    G_dict = {}
+    for f in files:
+        points, name, comment, dim = read_tsp(path + f)
+        G = complete_graph(points)
+        G_dict[f"{name}: {comment}"] = G
+
+    for name, G in G_dict.items():
+        print(f"{name = }")
+        print(f"{str(G) = }")
+        print("-" * 50)
