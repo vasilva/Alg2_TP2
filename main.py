@@ -1,8 +1,9 @@
 import numpy as np
 import networkx as nx
 import pandas as pd
-import scipy as sp
 import os
+import cProfile
+from tsp import TSP
 
 
 def open_tsp_files():
@@ -10,6 +11,21 @@ def open_tsp_files():
     files = os.listdir(path)
     files = [file for file in files if file.endswith(".tsp")]
     return path, files
+
+
+def get_bounds():
+    """
+    Open the bounds.txt file and return the bounds.
+
+    Returns:
+        bounds (dict): The bounds.
+    """
+    with open("data/bounds.txt", "r") as f:
+        bounds = f.readlines()
+
+    bounds = [bound.strip().split() for bound in bounds]
+    bounds = {bound[0]: int(bound[1]) for bound in bounds}
+    return bounds
 
 
 def read_tsp(filename: str):
@@ -80,16 +96,18 @@ def complete_graph(points) -> nx.Graph:
 
 
 if __name__ == "__main__":
+
     path, files = open_tsp_files()
     G_dict = {}
+    bounds = get_bounds()
     for f in files:
         points, name, comment, dim = read_tsp(path + f)
         G = complete_graph(points)
-        G_dict[f"{name}: {comment}"] = G
+        bound = bounds[f]
+        G_dict[f"{name}"] = (G, comment, bound)
 
-    for name, G in G_dict.items():
+    for name, (G, _, bound) in G_dict.items():
+        t = TSP(G)
+        cProfile.run(f"t('tat')")
         print(f"{name = }")
-        print(f"{str(G) = }")
         print("-" * 50)
-
-    print(files)

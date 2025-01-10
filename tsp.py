@@ -1,5 +1,8 @@
 import numpy as np
 import networkx as nx
+from memory_profiler import profile
+
+fp = open(f"mem/mem_profiler.log", "w+")
 
 
 class TSP:
@@ -7,6 +10,7 @@ class TSP:
     TSP class for solving the Travelling Salesman Problem.
     """
 
+    @profile(stream=fp, precision=4)
     def __init__(self, G: nx.Graph):
         """
         Initialize the TSP class.
@@ -98,6 +102,7 @@ class TSP:
         self.final_path[: self.N + 1] = self.curr_path[:]
         self.final_path[self.N] = self.curr_path[0]
 
+    @profile(stream=fp, precision=4)
     def BB_TSP(self):
         """
         Find the shortest path between all nodes using Branch and Bound.
@@ -122,6 +127,7 @@ class TSP:
 
         return int(self.final_res), self.final_path
 
+    @profile(stream=fp, precision=4)
     def TSPRec(self, curr_weight, level):
         """
         The recursive function to find the shortest path between all nodes.
@@ -194,6 +200,7 @@ class TSP:
                     if self.curr_path[j] != -1:
                         self.visited[self.curr_path[j]] = True
 
+    @profile(stream=fp, precision=4)
     def TAT_TSP(self):
         """
         Find the shortest path between all nodes using Twice Around the Tree
@@ -215,6 +222,7 @@ class TSP:
         self.full_walk = dfs + [dfs[0]]
         return int(self.full_res), self.full_walk
 
+    @profile(stream=fp, precision=4)
     def christofides(self):
         """
         Find the shortest path between all nodes using Christofides
@@ -228,35 +236,3 @@ class TSP:
         for i in self.final_path:
             self.final_res += self.adj[i - 1][i]
         return int(self.final_res), self.final_path
-
-
-if __name__ == "__main__":
-    adj = [
-        [0, 10, 15, 20],
-        [10, 0, 35, 25],
-        [15, 35, 0, 30],
-        [20, 25, 30, 0],
-    ]
-
-    G = nx.from_numpy_array(np.array(adj))
-    N = len(G)
-    T = TSP(G)
-    BB_final_res, BB_final_path = T("bb")
-    TAT_final_res, TAT_final_path = T("tat")
-    ch_final_res, ch_final_path = T("ch")
-
-    print("Branch and Bound")
-    print(f"Minimum cost: {BB_final_res}")
-    print(f"Path Taken: {BB_final_path}")
-
-    print("-" * 50)
-
-    print("Twice Around the Tree")
-    print(f"Minimum cost: {TAT_final_res}")
-    print(f"Path Taken: {TAT_final_path}")
-
-    print("-" * 50)
-
-    print("Christofides")
-    print(f"Minimum cost: {ch_final_res}")
-    print(f"Path Taken: {ch_final_path}")

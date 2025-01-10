@@ -1,0 +1,49 @@
+Filename: /mnt/c/Users/vinic/Documents/Alg2_TP2/tsp.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    12 1043.5000 MiB 1043.5000 MiB           1       @profile(stream=fp, precision=4)
+    13                                             def __init__(self, G: nx.Graph):
+    14                                                 """
+    15                                                 Initialize the TSP class.
+    16                                         
+    17                                                 Args:
+    18                                                     G (nx.Graph): The graph to be solved.
+    19                                                 """
+    20 1043.5000 MiB   0.0000 MiB           1           self.Graph = G
+    21 1043.5000 MiB   0.0000 MiB           1           self.final_res = np.inf
+    22 1043.5000 MiB   0.0000 MiB           1           self.final_path = [None] * (len(G) + 1)
+    23 1043.5000 MiB   0.0000 MiB           1           self.visited = [False] * (len(G))
+    24 1043.5000 MiB   0.0000 MiB           1           self.curr_bound = 0
+    25 1043.5000 MiB   0.0000 MiB           1           self.curr_path = [-1] * (len(G) + 1)
+    26 1043.5000 MiB   0.0000 MiB           1           self.N = len(G)
+    27 1046.3359 MiB   2.8359 MiB           1           self.adj = nx.to_numpy_array(G)
+
+
+Filename: /mnt/c/Users/vinic/Documents/Alg2_TP2/tsp.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+   202 1046.3359 MiB 1046.3359 MiB           1       @profile(stream=fp, precision=4)
+   203                                             def TAT_TSP(self):
+   204                                                 """
+   205                                                 Find the shortest path between all nodes using Twice Around the Tree
+   206                                         
+   207                                                 Returns:
+   208                                                     final_res (int): The cost of the shortest path.
+   209                                                     final_path (list): The shortest path between all nodes.
+   210                                                 """
+   211                                                 # Create the Minimum Spanning Tree using Prim algorithm.
+   212 1050.4766 MiB   4.1406 MiB           1           mst = nx.minimum_spanning_tree(self.Graph, algorithm="prim")
+   213                                         
+   214                                                 # Do the preorder DFS transversal of the MST.
+   215 1050.4766 MiB   0.0000 MiB           1           dfs = list(nx.dfs_preorder_nodes(mst, source=0))
+   216                                         
+   217 1050.4766 MiB   0.0000 MiB           1           self.full_res = 0
+   218 1050.4766 MiB   0.0000 MiB         281           for i in dfs:
+   219 1050.4766 MiB   0.0000 MiB         280               self.full_res += self.adj[dfs[i - 1]][dfs[i]]
+   220                                         
+   221 1050.4766 MiB   0.0000 MiB           1           self.full_walk = dfs + [dfs[0]]
+   222 1050.4766 MiB   0.0000 MiB           1           return int(self.full_res), self.full_walk
+
+
