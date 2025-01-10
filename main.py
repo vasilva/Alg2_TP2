@@ -91,3 +91,5 @@ if __name__ == "__main__":
         print(f"{name = }")
         print(f"{str(G) = }")
         print("-" * 50)
+
+    print(files)
