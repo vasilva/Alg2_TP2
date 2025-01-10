@@ -37,10 +37,7 @@ class TSP:
         Find the shortest path between all nodes.
 
         Args:
-            algorithm (str): The algorithm to use. Valid choices are:
-                Branch and Bound: 'bb'.
-                Twice Around the Tree: 'tat'.
-            Default is 'bb'.
+            algorithm (str): The algorithm to use. Valid choices are: Branch and Bound: `bb`, Twice Around the Tree: `tat` or Christofides: `ch`. Default is `bb`.
 
         Returns:
             final_res (int): The cost of the shortest path.
@@ -51,8 +48,10 @@ class TSP:
                 return self.BB_TSP()
             case "tat":
                 return self.TAT_TSP()
+            case "ch":
+                return self.christofides()
             case _:
-                raise ValueError("Invalid algorithm")
+                raise ValueError("Invalid algorithm. Choose 'bb', 'tat' or 'ch'.")
 
     def first_min(self, i):
         """
@@ -216,6 +215,20 @@ class TSP:
         self.full_walk = dfs + [dfs[0]]
         return int(self.full_res), self.full_walk
 
+    def christofides(self):
+        """
+        Find the shortest path between all nodes using Christofides
+
+        Returns:
+            final_res (int): The cost of the shortest path.
+            final_path (list): The shortest path between all nodes.
+        """
+        self.final_path = nx.algorithms.approximation.christofides(self.Graph)
+        self.final_res = 0
+        for i in self.final_path:
+            self.final_res += self.adj[i - 1][i]
+        return int(self.final_res), self.final_path
+
 
 if __name__ == "__main__":
     adj = [
@@ -230,12 +243,20 @@ if __name__ == "__main__":
     T = TSP(G)
     BB_final_res, BB_final_path = T("bb")
     TAT_final_res, TAT_final_path = T("tat")
+    ch_final_res, ch_final_path = T("ch")
 
     print("Branch and Bound")
     print(f"Minimum cost: {BB_final_res}")
     print(f"Path Taken: {BB_final_path}")
+
     print("-" * 50)
 
     print("Twice Around the Tree")
     print(f"Minimum cost: {TAT_final_res}")
     print(f"Path Taken: {TAT_final_path}")
+
+    print("-" * 50)
+
+    print("Christofides")
+    print(f"Minimum cost: {ch_final_res}")
+    print(f"Path Taken: {ch_final_path}")
