@@ -1,0 +1,87 @@
+Running data/a280.tsp with Twice Around Tree
+data/a280.tsp Timed out
+-----------------------------------
+Running data/berlin52.tsp with Twice Around Tree
+data/berlin52.tsp Timed out
+-----------------------------------
+Running data/ch130.tsp with Twice Around Tree
+data/ch130.tsp Timed out
+-----------------------------------
+Running data/ch150.tsp with Twice Around Tree
+data/ch150.tsp Timed out
+-----------------------------------
+Running data/d198.tsp with Twice Around Tree
+data/d198.tsp Timed out
+-----------------------------------
+Running data/d493.tsp with Twice Around Tree
+data/d493.tsp Timed out
+-----------------------------------
+Running data/eil101.tsp with Twice Around Tree
+data/eil101.tsp Timed out
+-----------------------------------
+Running data/fl1400.tsp with Twice Around Tree
+data/fl1400.tsp Timed out
+-----------------------------------
+Running data/fl417.tsp with Twice Around Tree
+data/fl417.tsp Timed out
+-----------------------------------
+Running data/kroA100.tsp with Twice Around Tree
+data/kroA100.tsp Timed out
+-----------------------------------
+Running data/kroB100.tsp with Twice Around Tree
+data/kroB100.tsp Timed out
+-----------------------------------
+Running data/lin105.tsp with Twice Around Tree
+data/lin105.tsp Timed out
+-----------------------------------
+Running data/lin318.tsp with Twice Around Tree
+data/lin318.tsp Timed out
+-----------------------------------
+Running data/pr107.tsp with Twice Around Tree
+data/pr107.tsp Timed out
+-----------------------------------
+Running data/pr136.tsp with Twice Around Tree
+data/pr136.tsp Timed out
+-----------------------------------
+Running data/pr144.tsp with Twice Around Tree
+data/pr144.tsp Timed out
+-----------------------------------
+Running data/pr152.tsp with Twice Around Tree
+data/pr152.tsp Timed out
+-----------------------------------
+Running data/pr226.tsp with Twice Around Tree
+data/pr226.tsp Timed out
+-----------------------------------
+Running data/pr264.tsp with Twice Around Tree
+data/pr264.tsp Timed out
+-----------------------------------
+Running data/pr299.tsp with Twice Around Tree
+data/pr299.tsp Timed out
+-----------------------------------
+Running data/pr439.tsp with Twice Around Tree
+data/pr439.tsp Timed out
+-----------------------------------
+Running data/pr76.tsp with Twice Around Tree
+data/pr76.tsp Timed out
+-----------------------------------
+Running data/rat195.tsp with Twice Around Tree
+data/rat195.tsp Timed out
+-----------------------------------
+Running data/rat575.tsp with Twice Around Tree
+data/rat575.tsp Timed out
+-----------------------------------
+Running data/rat783.tsp with Twice Around Tree
+data/rat783.tsp Timed out
+-----------------------------------
+Running data/rat99.tsp with Twice Around Tree
+data/rat99.tsp Timed out
+-----------------------------------
+Running data/u159.tsp with Twice Around Tree
+data/u159.tsp Timed out
+-----------------------------------
+Running data/u574.tsp with Twice Around Tree
+data/u574.tsp Timed out
+-----------------------------------
+Running data/u724.tsp with Twice Around Tree
+data/u724.tsp Timed out
+-----------------------------------

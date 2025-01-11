@@ -1,16 +1,15 @@
 import numpy as np
 import networkx as nx
-import pandas as pd
 import os
 import cProfile
 from tsp import TSP
+import sys
 
 
-def open_tsp_files():
-    path = "data/"
+def open_tsp_files(path):
     files = os.listdir(path)
     files = [file for file in files if file.endswith(".tsp")]
-    return path, files
+    return files
 
 
 def get_bounds():
@@ -97,17 +96,61 @@ def complete_graph(points) -> nx.Graph:
 
 if __name__ == "__main__":
 
-    path, files = open_tsp_files()
-    G_dict = {}
-    bounds = get_bounds()
-    for f in files:
-        points, name, comment, dim = read_tsp(path + f)
-        G = complete_graph(points)
-        bound = bounds[f]
-        G_dict[f"{name}"] = (G, comment, bound)
+    match len(sys.argv):
+        case 1:
+            path = "data/"
+            files = open_tsp_files(path)
+            G_dict = {}
+            bounds = get_bounds()
+            for f in files:
+                points, name, comment, dim = read_tsp(f)
+                G = complete_graph(points)
+                bound = bounds[f]
+                G_dict[f"{name}"] = (G, comment, bound)
 
-    for name, (G, _, bound) in G_dict.items():
-        t = TSP(G)
-        cProfile.run(f"t('tat')")
-        print(f"{name = }")
-        print("-" * 50)
+            for name, (G, _, bound) in G_dict.items():
+                with open(f"mem/tat/profile_{name}_tat.log", "w+") as sys.stdout:
+                    t = TSP(G)
+                    cProfile.run(f"t('tat')")
+                    final_res, final_path = t("tat")
+                    print(f"{name = }")
+                    print(f"{bound = }")
+                    print(f"{final_res = }")
+
+        case 2:
+            filename = sys.argv[1]
+            points, name, comment, dim = read_tsp(filename)
+            G = complete_graph(points)
+            filename = filename.replace("data/", "")
+            bound = get_bounds()[filename]
+            with open(f"mem/tat/profile_{name}_tat.log", "w+") as sys.stdout:
+                t = TSP(G)
+                cProfile.run("t('tat')")
+                final_res, final_path = t("tat")
+                print(f"{name = }")
+                print(f"{bound = }")
+                print(f"{final_res = }")
+
+        case 3:
+            filename = sys.argv[1]
+            alg = sys.argv[2]
+            points, name, comment, dim = read_tsp(filename)
+            G = complete_graph(points)
+            filename = filename.replace("data/", "")
+            bound = get_bounds()[filename]
+            with open(f"mem/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
+                t = TSP(G)
+                cProfile.run(f"t('{alg}')")
+                if alg != "bb":
+                    final_res, final_path = t(alg)
+                print(f"{name = }")
+                print(f"{bound = }")
+                if alg == "bb":
+                    final_res = bound
+                print(f"{final_res = }")
+
+        case _:
+            usage = (
+                "Usage: python3 main.py (optional)[filename.tsp] (optional)[bb|tat|ch]"
+            )
+            raise ValueError(usage)

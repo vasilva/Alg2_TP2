@@ -1,0 +1,88 @@
+-----------------------------------
+Running data/a280.tsp with Branch and Bound
+data/a280.tsp Complete
+-----------------------------------
+Running data/berlin52.tsp with Branch and Bound
+data/berlin52.tsp Complete
+-----------------------------------
+Running data/ch130.tsp with Branch and Bound
+data/ch130.tsp Complete
+-----------------------------------
+Running data/ch150.tsp with Branch and Bound
+data/ch150.tsp Complete
+-----------------------------------
+Running data/d198.tsp with Branch and Bound
+data/d198.tsp Complete
+-----------------------------------
+Running data/d493.tsp with Branch and Bound
+data/d493.tsp Complete
+-----------------------------------
+Running data/eil101.tsp with Branch and Bound
+data/eil101.tsp Complete
+-----------------------------------
+Running data/fl1400.tsp with Branch and Bound
+data/fl1400.tsp Complete
+-----------------------------------
+Running data/fl417.tsp with Branch and Bound
+data/fl417.tsp Complete
+-----------------------------------
+Running data/kroA100.tsp with Branch and Bound
+data/kroA100.tsp Complete
+-----------------------------------
+Running data/kroB100.tsp with Branch and Bound
+data/kroB100.tsp Complete
+-----------------------------------
+Running data/lin105.tsp with Branch and Bound
+data/lin105.tsp Complete
+-----------------------------------
+Running data/lin318.tsp with Branch and Bound
+data/lin318.tsp Complete
+-----------------------------------
+Running data/pr107.tsp with Branch and Bound
+data/pr107.tsp Complete
+-----------------------------------
+Running data/pr136.tsp with Branch and Bound
+data/pr136.tsp Complete
+-----------------------------------
+Running data/pr144.tsp with Branch and Bound
+data/pr144.tsp Complete
+-----------------------------------
+Running data/pr152.tsp with Branch and Bound
+data/pr152.tsp Complete
+-----------------------------------
+Running data/pr226.tsp with Branch and Bound
+data/pr226.tsp Complete
+-----------------------------------
+Running data/pr264.tsp with Branch and Bound
+data/pr264.tsp Complete
+-----------------------------------
+Running data/pr299.tsp with Branch and Bound
+data/pr299.tsp Complete
+-----------------------------------
+Running data/pr439.tsp with Branch and Bound
+data/pr439.tsp Complete
+-----------------------------------
+Running data/pr76.tsp with Branch and Bound
+data/pr76.tsp Complete
+-----------------------------------
+Running data/rat195.tsp with Branch and Bound
+data/rat195.tsp Complete
+-----------------------------------
+Running data/rat575.tsp with Branch and Bound
+data/rat575.tsp Complete
+-----------------------------------
+Running data/rat783.tsp with Branch and Bound
+data/rat783.tsp Complete
+-----------------------------------
+Running data/rat99.tsp with Branch and Bound
+data/rat99.tsp Complete
+-----------------------------------
+Running data/u159.tsp with Branch and Bound
+data/u159.tsp Complete
+-----------------------------------
+Running data/u574.tsp with Branch and Bound
+data/u574.tsp Complete
+-----------------------------------
+Running data/u724.tsp with Branch and Bound
+data/u724.tsp Complete
+-----------------------------------
