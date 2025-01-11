@@ -1,0 +1,259 @@
+Filename: /mnt/c/Users/vinic/Documents/Alg2_TP2/tsp.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+    11  96.1367 MiB  96.1367 MiB           1       @profile(precision=4)
+    12                                             def __init__(self, G: nx.Graph):
+    13                                                 """
+    14                                                 Initialize the TSP class.
+    15                                         
+    16                                                 Args:
+    17                                                     G (nx.Graph): The graph to be solved.
+    18                                                 """
+    19  96.1367 MiB   0.0000 MiB           1           self.Graph = G
+    20  96.1367 MiB   0.0000 MiB           1           self.final_res = np.inf
+    21  96.1367 MiB   0.0000 MiB           1           self.final_path = [None] * (len(G) + 1)
+    22  96.1367 MiB   0.0000 MiB           1           self.visited = [False] * (len(G))
+    23  96.1367 MiB   0.0000 MiB           1           self.curr_bound = 0
+    24  96.1367 MiB   0.0000 MiB           1           self.curr_path = [-1] * (len(G) + 1)
+    25  96.1367 MiB   0.0000 MiB           1           self.N = len(G)
+    26  96.6523 MiB   0.5156 MiB           1           self.adj = nx.to_numpy_array(G)
+
+
+Filename: /mnt/c/Users/vinic/Documents/Alg2_TP2/tsp.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+   201  96.6523 MiB  96.6523 MiB           1       @profile(precision=4)
+   202                                             def TAT_TSP(self):
+   203                                                 """
+   204                                                 Find the shortest path between all nodes using Twice Around the Tree
+   205                                         
+   206                                                 Returns:
+   207                                                     final_res (int): The cost of the shortest path.
+   208                                                     final_path (list): The shortest path between all nodes.
+   209                                                 """
+   210                                                 # Create the Minimum Spanning Tree using Prim algorithm.
+   211  97.1680 MiB   0.5156 MiB           1           mst = nx.minimum_spanning_tree(self.Graph, algorithm="prim")
+   212                                         
+   213                                                 # Do the preorder DFS transversal of the MST.
+   214  97.1680 MiB   0.0000 MiB           1           dfs = list(nx.dfs_preorder_nodes(mst, source=0))
+   215                                         
+   216  97.1680 MiB   0.0000 MiB           1           self.full_res = 0
+   217  97.1680 MiB   0.0000 MiB         108           for i in dfs:
+   218  97.1680 MiB   0.0000 MiB         107               self.full_res += self.adj[dfs[i - 1]][dfs[i]]
+   219                                         
+   220  97.1680 MiB   0.0000 MiB           1           self.full_walk = dfs + [dfs[0]]
+   221  97.1680 MiB   0.0000 MiB           1           return int(self.full_res), self.full_walk
+
+
+         52548 function calls (52509 primitive calls) in 0.106 seconds
+
+   Ordered by: standard name
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 13:1(<module>)
+        1    0.000    0.000    0.001    0.001 <class 'networkx.utils.decorators.argmap'> compilation 13:1(argmap_minimum_spanning_edges_9)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 17:1(<module>)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 17:1(argmap_prim_mst_edges_14)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 21:1(<module>)
+        1    0.000    0.000    0.001    0.001 <class 'networkx.utils.decorators.argmap'> compilation 21:1(argmap_dfs_preorder_nodes_18)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 25:1(<module>)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 25:1(argmap_dfs_labeled_edges_22)
+        1    0.000    0.000    0.000    0.000 <class 'networkx.utils.decorators.argmap'> compilation 8:1(<module>)
+        1    0.000    0.000    0.088    0.088 <class 'networkx.utils.decorators.argmap'> compilation 8:1(argmap_minimum_spanning_tree_5)
+      120    0.000    0.000    0.000    0.000 <string>:1(<lambda>)
+        1    0.000    0.000    0.106    0.106 <string>:1(<module>)
+      108    0.000    0.000    0.000    0.000 _collections_abc.py:840(items)
+      108    0.000    0.000    0.000    0.000 _collections_abc.py:862(__init__)
+    11557    0.016    0.000    0.023    0.000 _collections_abc.py:909(__iter__)
+        5    0.000    0.000    0.002    0.000 backends.py:590(__signature__)
+       29    0.000    0.000    0.000    0.000 backends.py:599(<genexpr>)
+      5/2    0.000    0.000    0.089    0.044 backends.py:627(__call__)
+       25    0.000    0.000    0.000    0.000 codecs.py:276(reset)
+       25    0.000    0.000    0.000    0.000 codecs.py:327(reset)
+        1    0.000    0.000    0.000    0.000 contextlib.py:102(__init__)
+        1    0.000    0.000    0.000    0.000 contextlib.py:130(__enter__)
+        1    0.000    0.000    0.000    0.000 contextlib.py:139(__exit__)
+        1    0.000    0.000    0.000    0.000 contextlib.py:279(helper)
+      108    0.000    0.000    0.000    0.000 coreviews.py:43(__init__)
+      107    0.000    0.000    0.000    0.000 coreviews.py:49(__iter__)
+    11342    0.007    0.000    0.007    0.000 coreviews.py:52(__getitem__)
+      107    0.000    0.000    0.000    0.000 coreviews.py:80(__getitem__)
+        1    0.000    0.000    0.000    0.000 coroutines.py:164(iscoroutinefunction)
+        1    0.000    0.000    0.000    0.000 decorators.py:1013(get_name)
+        7    0.000    0.000    0.000    0.000 decorators.py:1058(<genexpr>)
+        5    0.001    0.000    0.003    0.001 decorators.py:1064(signature)
+    32/21    0.000    0.000    0.000    0.000 decorators.py:1170(_flatten)
+       21    0.000    0.000    0.000    0.000 decorators.py:1200(_indent)
+        5    0.000    0.000    0.004    0.001 decorators.py:720(_lazy_compile)
+      5/2    0.000    0.000    0.090    0.045 decorators.py:788(func)
+       21    0.000    0.000    0.000    0.000 decorators.py:831(_count)
+       16    0.000    0.000    0.000    0.000 decorators.py:854(_name)
+        5    0.000    0.000    0.004    0.001 decorators.py:874(compile)
+        1    0.000    0.000    0.000    0.000 decorators.py:88(_not_implemented_for)
+      6/5    0.000    0.000    0.003    0.001 decorators.py:922(assemble)
+        1    0.000    0.000    0.001    0.001 depth_first_search.py:353(dfs_preorder_nodes)
+      108    0.000    0.000    0.002    0.000 depth_first_search.py:409(<genexpr>)
+      321    0.002    0.000    0.002    0.000 depth_first_search.py:412(dfs_labeled_edges)
+       34    0.000    0.000    0.000    0.000 enum.py:359(__call__)
+       34    0.000    0.000    0.000    0.000 enum.py:678(__new__)
+        1    0.000    0.000    0.000    0.000 functools.py:421(_unwrap_partial)
+        2    0.000    0.000    0.000    0.000 functools.py:961(__get__)
+        2    0.000    0.000    0.001    0.001 genericpath.py:16(exists)
+      107    0.000    0.000    0.000    0.000 graph.py:1318(neighbors)
+        1    0.000    0.000    0.000    0.000 graph.py:1558(is_multigraph)
+        1    0.000    0.000    0.000    0.000 graph.py:1562(is_directed)
+        1    0.000    0.000    0.000    0.000 graph.py:332(__init__)
+        1    0.000    0.000    0.000    0.000 graph.py:37(__set__)
+        1    0.000    0.000    0.000    0.000 graph.py:375(adj)
+        1    0.000    0.000    0.000    0.000 graph.py:437(__iter__)
+        1    0.000    0.000    0.000    0.000 graph.py:469(__len__)
+        1    0.001    0.001    0.001    0.001 graph.py:566(add_nodes_from)
+        1    0.000    0.000    0.000    0.000 graph.py:59(__set__)
+        1    0.000    0.000    0.000    0.000 graph.py:738(nodes)
+        1    0.001    0.001    0.085    0.085 graph.py:968(add_edges_from)
+        1    0.000    0.000    0.000    0.000 inspect.py:1049(__init__)
+      120    0.000    0.000    0.000    0.000 inspect.py:1058(tokeneater)
+        1    0.000    0.000    0.001    0.001 inspect.py:1101(getblock)
+        1    0.000    0.000    0.002    0.002 inspect.py:1112(getsourcelines)
+        4    0.000    0.000    0.000    0.000 inspect.py:182(ismodule)
+        2    0.000    0.000    0.000    0.000 inspect.py:191(isclass)
+        3    0.000    0.000    0.000    0.000 inspect.py:199(ismethod)
+        5    0.000    0.000    0.001    0.000 inspect.py:2280(_signature_from_function)
+     10/5    0.000    0.000    0.002    0.000 inspect.py:2375(_signature_from_callable)
+       34    0.000    0.000    0.000    0.000 inspect.py:2637(__init__)
+      155    0.000    0.000    0.000    0.000 inspect.py:2687(name)
+       22    0.000    0.000    0.000    0.000 inspect.py:2691(default)
+       92    0.000    0.000    0.000    0.000 inspect.py:2699(kind)
+       13    0.000    0.000    0.000    0.000 inspect.py:277(isfunction)
+        1    0.000    0.000    0.000    0.000 inspect.py:290(_has_code_flag)
+       10    0.000    0.000    0.000    0.000 inspect.py:2920(__init__)
+       29    0.000    0.000    0.000    0.000 inspect.py:2969(<genexpr>)
+     10/5    0.000    0.000    0.002    0.000 inspect.py:2998(from_callable)
+       15    0.000    0.000    0.000    0.000 inspect.py:3006(parameters)
+        5    0.000    0.000    0.000    0.000 inspect.py:3014(replace)
+        1    0.000    0.000    0.000    0.000 inspect.py:308(iscoroutinefunction)
+     10/5    0.000    0.000    0.002    0.000 inspect.py:3252(signature)
+        3    0.000    0.000    0.000    0.000 inspect.py:355(istraceback)
+        3    0.000    0.000    0.000    0.000 inspect.py:365(isframe)
+        8    0.000    0.000    0.000    0.000 inspect.py:379(iscode)
+        6    0.000    0.000    0.000    0.000 inspect.py:612(unwrap)
+        1    0.000    0.000    0.000    0.000 inspect.py:629(_is_wrapper)
+        5    0.000    0.000    0.000    0.000 inspect.py:632(_is_wrapper)
+        5    0.000    0.000    0.000    0.000 inspect.py:66(get_annotations)
+        1    0.000    0.000    0.000    0.000 inspect.py:773(getfile)
+        1    0.000    0.000    0.001    0.001 inspect.py:813(getsourcefile)
+        3    0.000    0.000    0.000    0.000 inspect.py:820(<genexpr>)
+        4    0.000    0.000    0.000    0.000 inspect.py:823(<genexpr>)
+        1    0.000    0.000    0.000    0.000 inspect.py:850(getmodule)
+        1    0.000    0.000    0.001    0.001 inspect.py:932(findsource)
+        2    0.000    0.000    0.000    0.000 linecache.py:36(getlines)
+        1    0.000    0.000    0.001    0.001 linecache.py:52(checkcache)
+        1    0.000    0.000    0.106    0.106 memory_profiler.py:1185(wrapper)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:1201(choose_backend)
+        6    0.000    0.000    0.000    0.000 memory_profiler.py:1215(<genexpr>)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:640(__init__)
+        1    0.000    0.000    0.003    0.003 memory_profiler.py:645(add)
+        2    0.000    0.000    0.000    0.000 memory_profiler.py:689(items)
+       22    0.000    0.000    0.000    0.000 memory_profiler.py:695(<genexpr>)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:702(__init__)
+        1    0.000    0.000    0.003    0.003 memory_profiler.py:713(__call__)
+        1    0.000    0.000    0.003    0.003 memory_profiler.py:728(add_function)
+        2    0.000    0.000    0.000    0.000 memory_profiler.py:740(_count_ctxmgr)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:748(wrap_function)
+        1    0.000    0.000    0.103    0.103 memory_profiler.py:759(f)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:775(enable_by_count)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:782(disable_by_count)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:842(enable)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:849(disable)
+        1    0.000    0.000    0.000    0.000 memory_profiler.py:853(show_results)
+        2    0.000    0.000    0.000    0.000 misc.py:595(_clear_cache)
+      107    0.057    0.001    0.084    0.001 mst.py:255(prim_mst_edges)
+        1    0.000    0.000    0.001    0.001 mst.py:370(minimum_spanning_edges)
+        1    0.000    0.000    0.088    0.088 mst.py:559(minimum_spanning_tree)
+       16    0.000    0.000    0.000    0.000 re.py:202(sub)
+        1    0.000    0.000    0.000    0.000 re.py:249(compile)
+       17    0.000    0.000    0.000    0.000 re.py:288(_compile)
+        1    0.000    0.000    0.000    0.000 reportviews.py:178(__init__)
+        1    0.000    0.000    0.000    0.000 reportviews.py:185(__iter__)
+      107    0.000    0.000    0.000    0.000 reportviews.py:188(__getitem__)
+      121    0.000    0.000    0.000    0.000 tokenize.py:431(_tokenize)
+        1    0.000    0.000    0.000    0.000 tokenize.py:614(generate_tokens)
+        1    0.011    0.011    0.103    0.103 tsp.py:201(TAT_TSP)
+        1    0.000    0.000    0.106    0.106 tsp.py:37(__call__)
+      125    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x55840449e9a0}
+     1587    0.001    0.000    0.001    0.000 {built-in method _heapq.heappop}
+     5671    0.001    0.000    0.001    0.000 {built-in method _heapq.heappush}
+        7    0.000    0.000    0.000    0.000 {built-in method builtins.any}
+       15    0.000    0.000    0.000    0.000 {built-in method builtins.callable}
+        5    0.000    0.000    0.000    0.000 {built-in method builtins.compile}
+      6/1    0.000    0.000    0.106    0.106 {built-in method builtins.exec}
+       20    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+       30    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+       43    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+      273    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+      323    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+  151/150    0.000    0.000    0.000    0.000 {built-in method builtins.len}
+     5673    0.000    0.000    0.001    0.000 {built-in method builtins.next}
+     5671    0.001    0.000    0.001    0.000 {built-in method math.isnan}
+        3    0.002    0.001    0.002    0.001 {built-in method posix.stat}
+        6    0.000    0.000    0.000    0.000 {built-in method sys.getrecursionlimit}
+        1    0.000    0.000    0.000    0.000 {built-in method sys.gettrace}
+        2    0.000    0.000    0.000    0.000 {built-in method sys.settrace}
+        2    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.RLock' objects}
+      224    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+      207    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+      107    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+      106    0.000    0.000    0.000    0.000 {method 'discard' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 {method 'end' of 're.Match' objects}
+        6    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+       44    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+     5838    0.001    0.000    0.001    0.000 {method 'get' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+      124    0.000    0.000    0.000    0.000 {method 'isidentifier' of 'str' objects}
+       15    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+      115    0.000    0.000    0.000    0.000 {method 'match' of 're.Pattern' objects}
+      108    0.000    0.000    0.000    0.000 {method 'pop' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'pop' of 'set' objects}
+        2    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+      107    0.000    0.000    0.000    0.000 {method 'span' of 're.Match' objects}
+       16    0.000    0.000    0.000    0.000 {method 'sub' of 're.Pattern' objects}
+      439    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        5    0.000    0.000    0.000    0.000 {method 'values' of 'dict' objects}
+       15    0.000    0.000    0.000    0.000 {method 'values' of 'mappingproxy' objects}
+       25    0.000    0.000    0.000    0.000 {method 'write' of '_io.TextIOWrapper' objects}
+
+
+Filename: /mnt/c/Users/vinic/Documents/Alg2_TP2/tsp.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+   201  97.1680 MiB  97.1680 MiB           1       @profile(precision=4)
+   202                                             def TAT_TSP(self):
+   203                                                 """
+   204                                                 Find the shortest path between all nodes using Twice Around the Tree
+   205                                         
+   206                                                 Returns:
+   207                                                     final_res (int): The cost of the shortest path.
+   208                                                     final_path (list): The shortest path between all nodes.
+   209                                                 """
+   210                                                 # Create the Minimum Spanning Tree using Prim algorithm.
+   211  97.4258 MiB   0.2578 MiB           1           mst = nx.minimum_spanning_tree(self.Graph, algorithm="prim")
+   212                                         
+   213                                                 # Do the preorder DFS transversal of the MST.
+   214  97.4258 MiB   0.0000 MiB           1           dfs = list(nx.dfs_preorder_nodes(mst, source=0))
+   215                                         
+   216  97.4258 MiB   0.0000 MiB           1           self.full_res = 0
+   217  97.4258 MiB   0.0000 MiB         108           for i in dfs:
+   218  97.4258 MiB   0.0000 MiB         107               self.full_res += self.adj[dfs[i - 1]][dfs[i]]
+   219                                         
+   220  97.4258 MiB   0.0000 MiB           1           self.full_walk = dfs + [dfs[0]]
+   221  97.4258 MiB   0.0000 MiB           1           return int(self.full_res), self.full_walk
+
+
+name = 'pr107'
+bound = 44303
+final_res = 54237
