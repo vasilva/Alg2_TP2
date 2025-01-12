@@ -114,7 +114,7 @@ class TSP:
             self.curr_bound += self.first_min(i) + self.second_min(i)
 
         # Rounding off the lower bound to an integer
-        self.curr_bound = int(self.curr_bound / 2)
+        self.curr_bound = int(np.rint(self.curr_bound / 2))
 
         # We start at vertex 1 so the first vertex
         # in curr_path[] is 0

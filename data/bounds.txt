@@ -1,9 +1,16 @@
 a280.tsp 2579
+berlin11.tsp 4038
 berlin52.tsp 7542
 ch130.tsp 6110
 ch150.tsp 6528
+ch5.tsp 1704
+ch7.tsp 1912
+ch9.tsp 2265
+d6.tsp 4711
+d8.tsp 3320
 d198.tsp 15780
 d493.tsp 35002
+eil10.tsp 160
 eil101.tsp 629
 fl1400.tsp 20127
 fl417.tsp 11861

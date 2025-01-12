@@ -1,87 +1,109 @@
-Running data/a280.tsp with Twice Around Tree
+-----------------------------------
+Running data/a280.tsp with Branch and Bound
 data/a280.tsp Timed out
 -----------------------------------
-Running data/berlin52.tsp with Twice Around Tree
+Running data/berlin52.tsp with Branch and Bound
 data/berlin52.tsp Timed out
 -----------------------------------
-Running data/ch130.tsp with Twice Around Tree
+Running data/ch130.tsp with Branch and Bound
 data/ch130.tsp Timed out
 -----------------------------------
-Running data/ch150.tsp with Twice Around Tree
+Running data/ch150.tsp with Branch and Bound
 data/ch150.tsp Timed out
 -----------------------------------
-Running data/d198.tsp with Twice Around Tree
+Running data/d198.tsp with Branch and Bound
 data/d198.tsp Timed out
 -----------------------------------
-Running data/d493.tsp with Twice Around Tree
+Running data/d493.tsp with Branch and Bound
 data/d493.tsp Timed out
 -----------------------------------
-Running data/eil101.tsp with Twice Around Tree
+Running data/eil101.tsp with Branch and Bound
 data/eil101.tsp Timed out
 -----------------------------------
-Running data/fl1400.tsp with Twice Around Tree
+Running data/fl1400.tsp with Branch and Bound
 data/fl1400.tsp Timed out
 -----------------------------------
-Running data/fl417.tsp with Twice Around Tree
+Running data/fl417.tsp with Branch and Bound
 data/fl417.tsp Timed out
 -----------------------------------
-Running data/kroA100.tsp with Twice Around Tree
+Running data/kroA100.tsp with Branch and Bound
 data/kroA100.tsp Timed out
 -----------------------------------
-Running data/kroB100.tsp with Twice Around Tree
+Running data/kroB100.tsp with Branch and Bound
 data/kroB100.tsp Timed out
 -----------------------------------
-Running data/lin105.tsp with Twice Around Tree
+Running data/lin105.tsp with Branch and Bound
 data/lin105.tsp Timed out
 -----------------------------------
-Running data/lin318.tsp with Twice Around Tree
+Running data/lin318.tsp with Branch and Bound
 data/lin318.tsp Timed out
 -----------------------------------
-Running data/pr107.tsp with Twice Around Tree
+Running data/pr107.tsp with Branch and Bound
 data/pr107.tsp Timed out
 -----------------------------------
-Running data/pr136.tsp with Twice Around Tree
+Running data/pr136.tsp with Branch and Bound
 data/pr136.tsp Timed out
 -----------------------------------
-Running data/pr144.tsp with Twice Around Tree
+Running data/pr144.tsp with Branch and Bound
 data/pr144.tsp Timed out
 -----------------------------------
-Running data/pr152.tsp with Twice Around Tree
+Running data/pr152.tsp with Branch and Bound
 data/pr152.tsp Timed out
 -----------------------------------
-Running data/pr226.tsp with Twice Around Tree
+Running data/pr226.tsp with Branch and Bound
 data/pr226.tsp Timed out
 -----------------------------------
-Running data/pr264.tsp with Twice Around Tree
+Running data/pr264.tsp with Branch and Bound
 data/pr264.tsp Timed out
 -----------------------------------
-Running data/pr299.tsp with Twice Around Tree
+Running data/pr299.tsp with Branch and Bound
 data/pr299.tsp Timed out
 -----------------------------------
-Running data/pr439.tsp with Twice Around Tree
+Running data/pr439.tsp with Branch and Bound
 data/pr439.tsp Timed out
 -----------------------------------
-Running data/pr76.tsp with Twice Around Tree
+Running data/pr76.tsp with Branch and Bound
 data/pr76.tsp Timed out
 -----------------------------------
-Running data/rat195.tsp with Twice Around Tree
+Running data/rat195.tsp with Branch and Bound
 data/rat195.tsp Timed out
 -----------------------------------
-Running data/rat575.tsp with Twice Around Tree
+Running data/rat575.tsp with Branch and Bound
 data/rat575.tsp Timed out
 -----------------------------------
-Running data/rat783.tsp with Twice Around Tree
+Running data/rat783.tsp with Branch and Bound
 data/rat783.tsp Timed out
 -----------------------------------
-Running data/rat99.tsp with Twice Around Tree
+Running data/rat99.tsp with Branch and Bound
 data/rat99.tsp Timed out
 -----------------------------------
-Running data/u159.tsp with Twice Around Tree
+Running data/u159.tsp with Branch and Bound
 data/u159.tsp Timed out
 -----------------------------------
-Running data/u574.tsp with Twice Around Tree
+Running data/u574.tsp with Branch and Bound
 data/u574.tsp Timed out
 -----------------------------------
-Running data/u724.tsp with Twice Around Tree
+Running data/u724.tsp with Branch and Bound
 data/u724.tsp Timed out
+-----------------------------------
+Running data/berlin11.tsp with Branch and Bound
+data/berlin11.tsp Timed out
+-----------------------------------
+Running data/ch5.tsp with Branch and Bound
+data/ch5.tsp Complete
+-----------------------------------
+Running data/ch7.tsp with Branch and Bound
+data/ch7.tsp Complete
+-----------------------------------
+Running data/ch9.tsp with Branch and Bound
+data/ch9.tsp Complete
+-----------------------------------
+Running data/d6.tsp with Branch and Bound
+data/d6.tsp Complete
+-----------------------------------
+Running data/d8.tsp with Branch and Bound
+data/d8.tsp Complete
+-----------------------------------
+Running data/eil10.tsp with Branch and Bound
+data/eil10.tsp Complete
 -----------------------------------

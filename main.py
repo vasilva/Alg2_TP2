@@ -144,9 +144,9 @@ if __name__ == "__main__":
                 if alg != "bb":
                     final_res, final_path = t(alg)
                 print(f"{name = }")
-                print(f"{bound = }")
                 if alg == "bb":
                     final_res = bound
+                print(f"{bound = }")
                 print(f"{final_res = }")
 
         case _:
