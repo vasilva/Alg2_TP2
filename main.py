@@ -109,7 +109,7 @@ if __name__ == "__main__":
                 G_dict[f"{name}"] = (G, comment, bound)
 
             for name, (G, _, bound) in G_dict.items():
-                with open(f"mem/tat/profile_{name}_tat.log", "w+") as sys.stdout:
+                with open(f"logs/tat/profile_{name}_tat.log", "w+") as sys.stdout:
                     t = TSP(G)
                     cProfile.run(f"t('tat')")
                     final_res, final_path = t("tat")
@@ -123,7 +123,7 @@ if __name__ == "__main__":
             G = complete_graph(points)
             filename = filename.replace("data/", "")
             bound = get_bounds()[filename]
-            with open(f"mem/tat/profile_{name}_tat.log", "w+") as sys.stdout:
+            with open(f"logs/tat/profile_{name}_tat.log", "w+") as sys.stdout:
                 t = TSP(G)
                 cProfile.run("t('tat')")
                 final_res, final_path = t("tat")
@@ -138,7 +138,7 @@ if __name__ == "__main__":
             G = complete_graph(points)
             filename = filename.replace("data/", "")
             bound = get_bounds()[filename]
-            with open(f"mem/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
+            with open(f"logs/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
                 t = TSP(G)
                 cProfile.run(f"t('{alg}')")
                 if alg != "bb":
