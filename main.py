@@ -141,11 +141,8 @@ if __name__ == "__main__":
             with open(f"logs/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
                 t = TSP(G)
                 cProfile.run(f"t('{alg}')")
-                if alg != "bb":
-                    final_res, final_path = t(alg)
+                final_res, final_path = t(alg)
                 print(f"{name = }")
-                if alg == "bb":
-                    final_res = bound
                 print(f"{bound = }")
                 print(f"{final_res = }")
 
