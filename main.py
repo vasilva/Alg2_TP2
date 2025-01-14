@@ -129,9 +129,12 @@ if __name__ == "__main__":
             # Roda o arquivo passado como argumento com o
             # algoritmo Twice Around the Tree
             filename = sys.argv[1]
-            points, name, comment, dim = read_tsp(filename)
+            if filename.startswith("data/"):
+                points, name, comment, dim = read_tsp(filename)
+                filename = filename.replace("data/", "")
+            else:
+                points, name, comment, dim = read_tsp("data/" + filename)
             G = complete_graph(points)
-            filename = filename.replace("data/", "")
             bound = get_bounds()[filename]
             with open(f"logs/tat/profile_{name}_tat.log", "w+") as sys.stdout:
                 t = TSP(G)
@@ -145,9 +148,12 @@ if __name__ == "__main__":
             # algoritmo passado como argumento
             filename = sys.argv[1]
             alg = sys.argv[2]
-            points, name, comment, dim = read_tsp(filename)
+            if filename.startswith("data/"):
+                points, name, comment, dim = read_tsp(filename)
+                filename = filename.replace("data/", "")
+            else:
+                points, name, comment, dim = read_tsp("data/" + filename)
             G = complete_graph(points)
-            filename = filename.replace("data/", "")
             bound = get_bounds()[filename]
             with open(f"logs/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
                 t = TSP(G)
