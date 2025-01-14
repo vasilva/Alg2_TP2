@@ -5,7 +5,7 @@ Usage: python3 main.py [filename.tsp] [tat|bb|ch]
 
 `tsp.py`: Contém a classe TSP que possui os algoritmos Branch and Bound, Twice Around the Tree e Christofides.
 
-`data\`: Pasta com todos os arquivos .tsp de entrada.
+`data/`: Pasta com todos os arquivos .tsp de entrada.
 
 `dados e graficos.ipynb`: Notebook com a tabela de dados gerados e os gráficos produzidos a partir dessa tabela.
 
