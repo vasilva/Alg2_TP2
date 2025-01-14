@@ -4,7 +4,7 @@
 Código fonte e Arquivos:
 
 `main.py`: Programa principal do projeto. Faz as leitura dos arquivos .tsp, cria o Grafo e roda o algoritmo correspondente.
-> Usage: python3 main.py [filename.tsp] [tat|bb|ch]
+> Usage: python3 main.py [filename.tsp] [tat | bb | ch]
 
 `tsp.py`: Contém a classe TSP que possui os algoritmos Branch and Bound, Twice Around the Tree e Christofides.
 
