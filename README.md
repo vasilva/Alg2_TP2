@@ -1,3 +1,6 @@
+# Trabalho Prático 2 – Soluções para problemas difíceis
+## Vinícius Alexandre da Silva
+
 Código fonte e Arquivos:
 
 `main.py`: Programa principal do projeto. Faz as leitura dos arquivos .tsp, cria o Grafo e roda o algoritmo correspondente.
