@@ -2,3 +2,7 @@ tp2
 logs
 .vscode
 __pycache__
+datacsv.xlsx
+tsp_debug.py
+main_debug.py
+tsp95.pdf

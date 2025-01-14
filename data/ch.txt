@@ -42,7 +42,7 @@ Running data/eil101.tsp with Christofides
 data/eil101.tsp Complete
 -----------------------------------
 Running data/fl1400.tsp with Christofides
-data/fl1400.tsp Timed out
+data/fl1400.tsp Complete
 -----------------------------------
 Running data/fl417.tsp with Christofides
 data/fl417.tsp Complete
@@ -94,6 +94,9 @@ data/rat575.tsp Complete
 -----------------------------------
 Running data/rat783.tsp with Christofides
 data/rat783.tsp Complete
+-----------------------------------
+Running data/rat99.tsp with Christofides
+data/rat99.tsp Complete
 -----------------------------------
 Running data/u159.tsp with Christofides
 data/u159.tsp Complete

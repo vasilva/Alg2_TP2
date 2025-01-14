@@ -1,12 +1,20 @@
 import numpy as np
 import networkx as nx
 import os
-import cProfile
 from tsp import TSP
 import sys
 
 
 def open_tsp_files(path):
+    """
+    Retorna a lista de arquivos .tsp no diretório especificado.
+
+    Args:
+        path (str): O caminho para o diretório que contém os arquivos .tsp.
+
+    Returns:
+        list: Uma lista com os nomes dos arquivos .tsp no diretório.
+    """
     files = os.listdir(path)
     files = [file for file in files if file.endswith(".tsp")]
     return files
@@ -14,10 +22,10 @@ def open_tsp_files(path):
 
 def get_bounds():
     """
-    Open the bounds.txt file and return the bounds.
+    Abre o arquivo bounds.txt e retorna os resultados ótimos.
 
     Returns:
-        bounds (dict): The bounds.
+        bounds (dict): Os resultados ótimos de cada arquivo.
     """
     with open("data/bounds.txt", "r") as f:
         bounds = f.readlines()
@@ -33,11 +41,11 @@ def read_tsp(filename: str):
     Args:
         filename (str): O nome do arquivo TSP.
 
-    Retorna:
+    Returns:
         points (list[(int, int)]): Uma lista de pontos.
         name (str): O nome do problema TSP.
         comment (str): O comentário do problema TSP.
-        dimension (int): A dimensão do problema TSP.
+        dimension (int): Tamanho do problema TSP.
     """
     with open(filename, "r") as f:
         for i in range(6):
@@ -69,7 +77,7 @@ def euclidean_distance(x1, y1, x2, y2) -> int:
         x2 (int): A coordenada x do segundo ponto.
         y2 (int): A coordenada y do segundo ponto.
 
-    Retorna:
+    Returns:
         int: A distância euclidiana entre os dois pontos.
     """
     return int(np.rint(np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)))
@@ -81,7 +89,7 @@ def complete_graph(points) -> nx.Graph:
     Args:
         points (list[(int, int)]): Uma lista com coordenadas (x,y) dos pontos.
 
-    Retorna:
+    Returns:
         nx.Graph: O grafo completo.
     """
     G = nx.Graph()
@@ -97,6 +105,7 @@ def complete_graph(points) -> nx.Graph:
 if __name__ == "__main__":
 
     match len(sys.argv):
+        # Roda todos os arquivos tsp com algoritmo Twice Around the Tree
         case 1:
             path = "data/"
             files = open_tsp_files(path)
@@ -111,13 +120,14 @@ if __name__ == "__main__":
             for name, (G, _, bound) in G_dict.items():
                 with open(f"logs/tat/profile_{name}_tat.log", "w+") as sys.stdout:
                     t = TSP(G)
-                    cProfile.run(f"t('tat')")
                     final_res, final_path = t("tat")
                     print(f"{name = }")
                     print(f"{bound = }")
                     print(f"{final_res = }")
 
         case 2:
+            # Roda o arquivo passado como argumento com o
+            # algoritmo Twice Around the Tree
             filename = sys.argv[1]
             points, name, comment, dim = read_tsp(filename)
             G = complete_graph(points)
@@ -125,13 +135,14 @@ if __name__ == "__main__":
             bound = get_bounds()[filename]
             with open(f"logs/tat/profile_{name}_tat.log", "w+") as sys.stdout:
                 t = TSP(G)
-                cProfile.run("t('tat')")
                 final_res, final_path = t("tat")
                 print(f"{name = }")
                 print(f"{bound = }")
                 print(f"{final_res = }")
 
         case 3:
+            # Roda o arquivo passado como argumento com o
+            # algoritmo passado como argumento
             filename = sys.argv[1]
             alg = sys.argv[2]
             points, name, comment, dim = read_tsp(filename)
@@ -140,7 +151,6 @@ if __name__ == "__main__":
             bound = get_bounds()[filename]
             with open(f"logs/{alg}/profile_{name}_{alg}.log", "w+") as sys.stdout:
                 t = TSP(G)
-                cProfile.run(f"t('{alg}')")
                 final_res, final_path = t(alg)
                 print(f"{name = }")
                 print(f"{bound = }")

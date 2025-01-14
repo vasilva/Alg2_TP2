@@ -1,20 +1,18 @@
 import numpy as np
 import networkx as nx
-from memory_profiler import profile
 
 
 class TSP:
     """
-    TSP class for solving the Travelling Salesman Problem.
+    Classe TSP para resolver o Problema do Caixeiro Viajante.
     """
 
-    @profile(precision=4)
     def __init__(self, G: nx.Graph):
         """
-        Initialize the TSP class.
+        Inicializa a classe TSP.
 
         Args:
-            G (nx.Graph): The graph to be solved.
+            G (nx.Graph): O grafo a ser resolvido.
         """
         self.Graph = G
         self.final_res = np.inf
@@ -27,210 +25,181 @@ class TSP:
 
     def __len__(self):
         """
-        Return the number of nodes in the graph.
+        Retorna o número de nós no grafo.
 
-        Returns:
-            int: The number of nodes in the graph.
+        Retorna:
+            int: O número de nós no grafo.
         """
         return self.N
 
     def __call__(self, algorithm="bb"):
         """
-        Find the shortest path between all nodes.
+        Encontra o caminho mais curto entre todos os nós.
 
         Args:
-            algorithm (str): The algorithm to use. Valid choices are: Branch and Bound: `bb`, Twice Around the Tree: `tat` or Christofides: `ch`. Default is `bb`.
+            algorithm (str): O algoritmo a ser usado. As escolhas válidas são: Branch and Bound: `bb`, Twice Around the Tree: `tat` ou Christofides: `ch`. O padrão é `bb`.
 
         Returns:
-            final_res (int): The cost of the shortest path.
-            final_path (list): The shortest path between all nodes.
+            final_res (int): O custo do caminho mais curto.
+            final_path (list): O caminho mais curto entre todos os nós.
         """
         match algorithm:
             case "bb":
-                return self.BB_TSP()
+                return self.branch_bound()
             case "tat":
-                return self.TAT_TSP()
+                return self.twice_around_tree()
             case "ch":
                 return self.christofides()
             case _:
-                raise ValueError("Invalid algorithm. Choose 'bb', 'tat' or 'ch'.")
+                raise ValueError("Algoritmo inválido. Escolha 'bb', 'tat' ou 'ch'.")
 
-    def first_min(self, i):
+    def pri_seg_min(self, i):
         """
-        Find the minimum distance between the node and the other nodes.
+        Encontra a menor e segunda menor distâncias entre um nó e os outros nós.
 
         Args:
-            i (int): The index of the node.
+            i (int): O índice do nó.
 
         Returns:
-            min (int): The minimum distance between the node and the other nodes.
+            primeiro (int): A distância mínima entre um nó e os outros nós.
+            segundo (int): A segunda menor distância entre um nó e os outros nós.
         """
-        min = self.final_res
-        for k in range(self.N):
-            if self.adj[i][k] < min and i != k:
-                min = self.adj[i][k]
-        return min
-
-    def second_min(self, i):
-        """
-        Find the second minimum distance between the node and the other nodes.
-
-        Args:
-            i (int): The index of the node.
-
-        Returns:
-            second (int): The second minimum distance between the node and the other nodes.
-        """
-        first, second = self.final_res, self.final_res
+        primeiro, segundo = np.inf, np.inf
         for j in range(self.N):
             if i == j:
                 continue
-            if self.adj[i][j] <= first:
-                second = first
-                first = self.adj[i][j]
+            if self.adj[i][j] <= primeiro:
+                segundo = primeiro
+                primeiro = self.adj[i][j]
+            elif self.adj[i][j] <= segundo and self.adj[i][j] != primeiro:
+                segundo = self.adj[i][j]
+        return primeiro, segundo
 
-            elif self.adj[i][j] <= second and self.adj[i][j] != first:
-                second = self.adj[i][j]
-        return second
-
-    def copy_final_path(self):
+    def branch_bound(self):
         """
-        Function to copy temporary solution to the final solution.
-        """
-        self.final_path[: self.N + 1] = self.curr_path[:]
-        self.final_path[self.N] = self.curr_path[0]
-
-    @profile(precision=4)
-    def BB_TSP(self):
-        """
-        Find the shortest path between all nodes using Branch and Bound.
+        Encontra o caminho mais curto entre todos os nós usando Branch and Bound.
 
         Returns:
-            final_res (int): The cost of the shortest path.
-            final_path (list): The shortest path between all nodes.
+            final_res (int): O custo do caminho mais curto.
+            final_path (list): O caminho mais curto entre todos os nós.
         """
-        # Compute initial bound
+        # Calcula o limite inicial
         for i in range(self.N):
-            self.curr_bound += self.first_min(i) + self.second_min(i)
+            primeiro, segundo = self.pri_seg_min(i)
+            self.curr_bound += primeiro + segundo
 
-        # Rounding off the lower bound to an integer
+        # Arredondando o limite inferior para um inteiro
         self.curr_bound = int(np.rint(self.curr_bound / 2))
 
-        # We start at vertex 1 so the first vertex
-        # in curr_path[] is 0
+        # Começa no vértice 1, então o primeiro vértice
+        # em curr_path[] é 0
         self.visited[0] = True
         self.curr_path[0] = 0
 
-        self.TSPRec(curr_weight=0, level=1)
+        # Faz a chamada da função recursiva
+        self.branch_bound_Rec(curr_weight=0, level=1)
 
         return int(self.final_res), self.final_path
 
-    @profile(precision=4)
-    def TSPRec(self, curr_weight, level):
+    def branch_bound_Rec(self, curr_weight, level):
         """
-        The recursive function to find the shortest path between all nodes.
+        A função recursiva do Branch and Bound para encontrar o caminho mais curto entre todos os nós.
 
         Args:
-            curr_weight (int): The current weight of the graph.
-            level (int): The current level of the graph.
+            curr_weight (int): O peso atual do grafo.
+            level (int): O nível atual do grafo.
         """
-        # base case is when we have reached level N
-        # which means we have covered all the nodes once
+        # Caso base é quando atingimos o nível N
+        # o que significa que cobrimos todos os nós uma vez
         if level == self.N:
-
-            # check if there is an edge from
-            # last vertex in path back to the first vertex
+            # Verifica se há uma aresta do
+            # último vértice no caminho de volta ao primeiro vértice
             if self.adj[self.curr_path[level - 1]][self.curr_path[0]] != 0:
-
-                # curr_res has the total weight
-                # of the solution we got
+                # curr_res tem o peso total
+                # da solução obtida
                 curr_res = (
                     curr_weight + self.adj[self.curr_path[level - 1]][self.curr_path[0]]
                 )
+            # Resposta final
             if curr_res < self.final_res:
-                self.copy_final_path()
+                self.final_path[: self.N + 1] = self.curr_path[:]
+                self.final_path[self.N] = self.curr_path[0]
                 self.final_res = curr_res
-
             return
 
-        # for any other level iterate for all vertices
-        # to build the search space tree recursively
+        # Para qualquer outro nível, iterar por todos os vértices
+        # para construir a árvore de espaço de busca recursivamente
         for i in range(self.N):
-
-            # Consider next vertex if it is not same
-            # (diagonal entry in adjacency matrix and
-            #  not visited already)
+            # Considerar o próximo vértice se não for o mesmo
+            # (entrada diagonal na matriz de adjacência e ainda não foi visitado)
             if self.adj[self.curr_path[level - 1]][i] != 0 and self.visited[i] == False:
                 temp = self.curr_bound
                 curr_weight += self.adj[self.curr_path[level - 1]][i]
+                primeiro, segundo = self.pri_seg_min(self.curr_path[level - 1])
 
-                # different computation of curr_bound
-                # for level 2 from the other levels
+                # Cálculo diferente de curr_bound
+                # para o nível 2 em relação aos outros níveis
                 if level == 1:
-                    self.curr_bound -= (
-                        self.first_min(self.curr_path[level - 1]) + self.first_min(i)
-                    ) / 2
-
+                    self.curr_bound -= (primeiro + self.pri_seg_min(i)[0]) / 2
                 else:
-                    self.curr_bound -= (
-                        self.second_min(self.curr_path[level - 1]) + self.first_min(i)
-                    ) / 2
-
-                # curr_bound + curr_weight is the actual lower bound
-                # for the node that we have arrived on.
-                # If current lower bound < final_res,
-                # we need to explore the node further
+                    self.curr_bound -= (segundo + self.pri_seg_min(i)[0]) / 2
+                # curr_bound + curr_weight é o limite inferior real para o nó visitado.
+                # Se o limite inferior atual < final_res,
+                # precisa-se explorar o nó mais a fundo
                 if self.curr_bound + curr_weight < self.final_res:
                     self.curr_path[level] = i
                     self.visited[i] = True
 
-                    # call TSPRec for the next level
-                    self.TSPRec(curr_weight, level + 1)
+                    # Chamada recursiva para o próximo nível
+                    self.branch_bound_Rec(curr_weight, level + 1)
 
-                # Else we have to prune the node by resetting
-                # all changes to curr_weight and curr_bound
+                # Caso contrário, tem que podar o nó, resetando
+                # todas as mudanças em curr_weight e curr_bound
                 curr_weight -= self.adj[self.curr_path[level - 1]][i]
                 self.curr_bound = temp
 
-                # Also reset the visited array
+                # Também resetar o array de visitados
                 self.visited = [False] * len(self.visited)
                 for j in range(level):
                     if self.curr_path[j] != -1:
                         self.visited[self.curr_path[j]] = True
 
-    @profile(precision=4)
-    def TAT_TSP(self):
+    def twice_around_tree(self):
         """
-        Find the shortest path between all nodes using Twice Around the Tree
+        Encontra o caminho mais curto entre todos os nós usando Twice Around the Tree
 
         Returns:
-            final_res (int): The cost of the shortest path.
-            final_path (list): The shortest path between all nodes.
+            final_res (int): O custo do caminho mais curto.
+            final_path (list): O caminho mais curto entre todos os nós.
         """
-        # Create the Minimum Spanning Tree using Prim algorithm.
+        # Cria a Árvore Geradora Mínima usando o algoritmo de Prim.
         mst = nx.minimum_spanning_tree(self.Graph, algorithm="prim")
 
-        # Do the preorder DFS transversal of the MST.
-        dfs = list(nx.dfs_preorder_nodes(mst, source=0))
+        # Faz a travessia em pré-ordem do DFS da Árvore Geradora Mínima.
+        dfs_preorder = list(nx.dfs_preorder_nodes(mst, source=0))
 
-        self.full_res = 0
-        for i in dfs:
-            self.full_res += self.adj[dfs[i - 1]][dfs[i]]
+        # Acumula as distâncias entre os vértices da lista do dfs
+        self.final_res = 0
+        for i in dfs_preorder:
+            self.final_res += self.adj[dfs_preorder[i - 1]][dfs_preorder[i]]
 
-        self.full_walk = dfs + [dfs[0]]
-        return int(self.full_res), self.full_walk
+        self.final_path = dfs_preorder + [dfs_preorder[0]]
+        return int(self.final_res), self.final_path
 
-    @profile(precision=4)
     def christofides(self):
         """
-        Find the shortest path between all nodes using Christofides
+        Encontra o caminho mais curto entre todos os nós usando Christofides
 
         Returns:
-            final_res (int): The cost of the shortest path.
-            final_path (list): The shortest path between all nodes.
+            final_res (int): O custo do caminho mais curto.
+            final_path (list): O caminho mais curto entre todos os nós.
         """
+        # Usa-se a função Christofides da biblioteca NetworkX
         self.final_path = nx.algorithms.approximation.christofides(self.Graph)
+        n = len(self.final_path)
+
+        # Acumula as distâncias entre os vértices da lista criada pelo Christofides
         self.final_res = 0
-        for i in self.final_path:
-            self.final_res += self.adj[i - 1][i]
+        for i in range(1, n):
+            self.final_res += self.adj[self.final_path[i - 1]][self.final_path[i]]
         return int(self.final_res), self.final_path
